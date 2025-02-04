@@ -1,23 +1,28 @@
-# Use Node.js 20 as the base image
-FROM node:20
-
-# Set the working directory inside the container
-WORKDIR /app
-
-# Copy package.json and package-lock.json first (for efficient caching)
-COPY package*.json ./
+# Use an official Ubuntu base image
+FROM ubuntu:latest
 
 # Install dependencies
-RUN npm install
+RUN apt-get update && apt-get install -y \
+  curl \
+  docker.io \
+  docker-compose \
+  nginx \
+  nodejs \
+  npm \
+  && rm -rf /var/lib/apt/lists/*
 
-# Copy all project files into the container
+# Set the working directory to your code directory
+WORKDIR /mnt/dev/code/simple-server
+
+# Copy your application files (docker-compose.yml, etc.) into the container
 COPY . .
 
-# Build the application (if required, e.g., TypeScript)
-RUN npm run build
+# Expose necessary ports for your services (App and Nginx)
+EXPOSE 3000 80
 
-# Expose the application port (Make sure your app is using port 3000)
-EXPOSE 3000
+# Install Docker Compose
+RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
+  chmod +x /usr/local/bin/docker-compose
 
-# Start the Node.js server (check if "npm start" is defined in your package.json)
-CMD ["npm", "start"]
+# Start Docker, Nginx, and your app using Docker Compose
+CMD service nginx start && docker-compose up --build
