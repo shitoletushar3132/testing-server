@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory to your code directory
-WORKDIR /mnt/dev/code/simple-server
+WORKDIR /mnt/dev/code/simple-server/all
 
 # Copy your application files (docker-compose.yml, etc.) into the container
 COPY . .
