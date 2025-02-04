@@ -1,0 +1,27 @@
+version: '3'
+services:
+  app:
+    build: . # Build the app container from your Dockerfile
+    deploy:
+      replicas: 3 # Run 3 instances of the app
+    expose:
+      - "3000" # Expose the port inside the Docker network (not externally)
+    environment:
+      - CONTAINER_NAME=$${HOSTNAME}
+    networks:
+      - app_network
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "3000:80" # Map port 3000 on the host to port 80 inside the NGINX container
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro # Mount your custom NGINX config
+    networks:
+      - app_network
+    depends_on:
+      - app
+
+networks:
+  app_network:
+    driver: bridge

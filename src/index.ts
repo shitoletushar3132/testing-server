@@ -1,10 +1,13 @@
 import express, { Request, Response } from "express";
-
+import os = require("os");
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Unique log to identify the container
+
 app.get("/", (req: Request, res: Response) => {
-  res.send("Hello, TypeScript Express!");
+  console.log(`Request handled by: ${os.hostname()}`);
+  res.send(`Hello, TypeScript Express! ${os.hostname()}`);
 });
 
 app.listen(port, () => {
