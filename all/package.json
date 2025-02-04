@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc -b",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "prestart": "sleep 5" 
   },
   "author": "",
   "license": "ISC",

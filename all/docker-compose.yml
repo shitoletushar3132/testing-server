@@ -5,9 +5,11 @@ services:
     deploy:
       replicas: 3 # Run 3 instances of the app
     expose:
-      - "3000" # Expose the port inside the Docker network (not externally)
+      - "10000" # Expose the port inside the Docker network (not externally)
+
     environment:
       - CONTAINER_NAME=$${HOSTNAME}
+      - PORT=10000
     networks:
       - app_network
 

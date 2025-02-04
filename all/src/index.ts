@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import os = require("os");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 10000;
 
 // Unique log to identify the container
 
